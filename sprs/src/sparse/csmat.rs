@@ -2121,10 +2121,10 @@ where
     fn mul(self, rhs: &'b ArrayBase<DS2, Ix1>) -> Array<N, Ix1> {
         let rows = self.rows();
         let cols = rhs.shape()[0];
-        let rhs_reshape = rhs.view().into_shape((cols, 1)).unwrap();
+        let rhs_reshape = rhs.view().into_shape_with_order((cols, 1)).unwrap();
         let mut res = Array::zeros(rows);
         {
-            let res_reshape = res.view_mut().into_shape((rows, 1)).unwrap();
+            let res_reshape = res.view_mut().into_shape_with_order((rows, 1)).unwrap();
             match self.storage() {
                 CSR => {
                     prod::csr_mulacc_dense_colmaj(
